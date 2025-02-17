@@ -1,0 +1,180 @@
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f2ff7f;
+
+}
+
+.header {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 16px;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.main {
+  background-color: #e3bcbc;
+
+  display: flex;
+  flex: 1;
+}
+
+.logo {
+  filter: sepia(100%);
+  align-self: flex-start;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.summary-widget {
+  display: flex;
+  flex-direction: row;
+  background-color: #dadfe1;
+  height: 7%;
+  width: 100%;
+  justify-content: space-around;
+  border: #f87f73 1px solid;
+}
+
+.widget {
+
+
+}
+
+.searchbox {
+  flex-grow: 1;
+  background: transparent url(images/search.png);
+}
+
+
+button {
+  margin-right: 10px;
+  border-radius: 5px;
+  border: #5b5a5a 0.5px solid;
+  background-color: darkgreen;
+  cursor: pointer;
+  height: 44px;
+  color: #f2ff7f;
+}
+
+input, select {
+  margin: 5px 10px 5px 10px ;
+  width: 200px;
+}
+
+.creationForm > div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+}
+
+.creationForm > div > label {
+  width: 100px;
+}
+
+.task-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+  padding: 10px;
+  width: 100%;
+}
+
+.task-column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  text-align: center;
+  background-color: #e9d5f0;
+  border: 2px solid #ccc;
+}
+
+.task-card {
+  border: #5b5a5a 1px double;
+  background-color: #def8a9;
+  text-align: left;
+  padding: 10px;
+}
+
+
+
+.modalBox {
+    background-color: var(--primary-color);
+    width: 100vw;
+    height: 100vw;
+}
+
+@media (min-width: 600px) {
+  .modalBox {
+    background-color: var(--primary-color);
+    width: 50vw;
+    height: 50vw;
+  }
+}
+
+.creationForm {
+  display: flex;
+  flex-direction: column;
+  color: yellowgreen;
+  font-size: 20px;
+  position: relative;
+  top: 100px;
+  z-index: 10;
+}
+
+.creationForm > * {
+  margin: 10px;
+}
+
+.closeButton {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.appInfoContainer {
+  display: flex;
+  align-items: center;
+}
+
+.appName {
+  margin: 0 auto;
+  font-size: 3em;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.appStatus {
+  margin-right: 20px;
+  color: #915be3;
+}
+
+.appStatusDown {
+  margin-right: 20px;
+  color: #b70404;
+}
+
+.createFormHeader {
+  position: fixed;
+  border-bottom: 1px solid gray;
+  width: 90%;
+}
+
+@media (min-width: 600px) {
+  .createFormHeader {
+    position: fixed;
+    border-bottom: 1px solid gray;
+    width: 50%;
+  }
+}
