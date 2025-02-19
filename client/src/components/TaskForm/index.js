@@ -1,58 +1,74 @@
 import React, {useRef, useState} from 'react';
-import Button from '@mui/material/Button';
-import {Typography} from "@mui/material";
+import {
+    Dialog,
+    DialogTitle,
+    DialogContent,
+    Button,
+    DialogActions,
+    TextField,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel,
+    FormHelperText
+} from "@mui/material";
 
-export const TaskForm = () => {
-    const modalRef = useRef(null);
+export const TaskForm = ({open, onClose}) => {
 
-    const openModal = () => {
-        modalRef.current?.showModal();
-    };
-
-    const closeModal = () => {
-        modalRef.current?.close();
-    };
-
-    const [formData, setFormData] = useState({
+    const initialFormData = {
         title: '',
         epic: '',
         priority: '',
         assignee: '',
         status: '',
-    });
+    };
+    const initialErrors = {
+        title: false,
+        epic: false,
+        priority: false,
+        assignee: false,
+        status: false,
+    };
 
-    const [errors, setErrors] = useState({});
-
+    const [formData, setFormData] = useState(initialFormData);
+    const [errors, setErrors] = useState(initialErrors);
 
     const handleChange = (e) => {
-
+        const {name, value} = e.target;
         setFormData({
             ...formData,
-            [e.target.name]: e.target.value
-        });
-    };
+            [name]: value
+        })
+        setErrors({
+            ...errors,
+            [name]: false
+        })
+    }
+
+
 
     const validateForm = () => {
         let newErrors = {};
 
-        if (!formData.title.trim()) {
-            newErrors.title = 'title is required';
+
+        if (!formData.title) {
+            newErrors.title = true
         }
 
-        if (!formData.epic.trim()) {
-            newErrors.epic = 'epic is required';
+        if (!formData.epic) {
+            newErrors.epic = true
         }
 
-        if (!formData.assignee.trim()) {
-            newErrors.assignee = 'assignee is required';
+        if (!formData.assignee) {
+            newErrors.assignee = true
         }
 
-        if (!formData.priority.trim()) {
-            newErrors.priority = 'priority is required';
+        if (!formData.priority) {
+            newErrors.priority = true
         }
 
-        if (!formData.status.trim()) {
-            newErrors.status = 'status is required';
+        if (!formData.status) {
+            newErrors.status = true
         }
 
         setErrors(newErrors);
@@ -61,6 +77,7 @@ export const TaskForm = () => {
     };
 
     const handleSubmit = async (e) => {
+
         e.preventDefault();
 
         if (validateForm()) {
@@ -84,118 +101,107 @@ export const TaskForm = () => {
                     console.log('result: ', result);
                 }
 
-                console.log('Success');
+                console.log('Form submitted successfully', formData);
+                alert('Form submitted successfully');
 
             } catch (e) {
                 console.log('Network error', e);
+                handleCloseDialog()
             }
-
-
-            console.log('Form submitted successfully', formData);
-            alert('Form submitted successfully');
-
-            setFormData({
-                title: '',
-                epic: '',
-                priority: '',
-                status: '',
-                assignee: ''
-            });
-
-            closeModal();
         }
-
-
-        // create new TaskID - check last taskID from db and create new one.
     };
 
-    return <>
-        <Button variant="contained" id="openModel" onClick={openModal}>Create</Button>
+    const handleOpenDialog = () => {
+        setFormData(initialFormData);
+        setErrors(initialErrors);
+    };
 
-        <dialog id="modal" ref={modalRef} className='modalBox'>
-            <div className="createFormHeader">
-                <Button variant="contained" id="closeModal" color="secondary" onClick={closeModal}>X</Button>
-                <Typography variant="h5">Create Task</Typography>
-            </div>
+    const handleCloseDialog = () => {
+        onClose();
+        handleOpenDialog();
+    };
 
-            <form className='creationForm' onSubmit={handleSubmit} noValidate>
+    return (
+        <Dialog open={open} onClose={handleOpenDialog}>
+            <DialogTitle>Create Task</DialogTitle>
+            <DialogContent>
+                <TextField
+                    label="Title"
+                    name="title"
+                    value={formData.title}
+                    onChange={handleChange}
+                    fullWidth
+                    margin="normal"
+                    error={errors.title}
+                    helperText={errors.title ? "Title is required" : ""}
+                />
 
-                <div>
-                    <label htmlFor="title">Title:</label>
-                    <input
-                        type="text"
-                        name="title"
-                        value={formData.title}
-                        onChange={handleChange}
-                    />
-                    {errors.title && <p style={{color: 'red'}}>{errors.title}</p>}
-                </div>
-
-                <div>
-                    <label htmlFor="epic">Epic:</label>
-                    <select
+                <FormControl fullWidth margin="normal" error={errors.epic}>
+                    <InputLabel id="select-label-epic">Epic</InputLabel>
+                    <Select
+                        labelId="select-label-epic"
                         name="epic"
-                        id="epic"
+                        value={formData.epic}
                         onChange={handleChange}
                     >
-                        <option value=""></option>
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
-                    </select>
-                    {errors.epic && <p style={{color: 'red'}}>{errors.epic}</p>}
-                </div>
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="option1">Option 1</MenuItem>
+                        <MenuItem value="option2">Option 2</MenuItem>
+                    </Select>
+                    {errors.epic && <FormHelperText>Epic is required</FormHelperText>}
+                </FormControl>
 
-                <div>
-                    <label htmlFor="priority">Priority:</label>
-                    <select
-                        name="priority"
-                        id="priority"
-                        onChange={handleChange}
-                    >
-                        <option value=""></option>
-                        <option value="P0">Urgent (P0)</option>
-                        <option value="P1">High (P1)</option>
-                        <option value="P2">Medium (P2)</option>
-                        <option value="P3">Low (P3)</option>
-                    </select>
-                    {errors.priority && <p style={{color: 'red'}}>{errors.priority}</p>}
-                </div>
 
-                <div>
-                    <label htmlFor="assignee">Assignee:</label>
-                    <select
+                <FormControl fullWidth margin="normal" error={errors.assignee}>
+                    <InputLabel id="select-label-assignee">Assignee</InputLabel>
+                    <Select
+                        labelId="select-label-assignee"
                         name="assignee"
-                        id="assignee"
+                        value={formData.assignee}
                         onChange={handleChange}
                     >
-                        <option value=""></option>
-                        <option value="ashok">Ashok</option>
-                        <option value="sahu">Sahu</option>
-                        <option value="saji">Saji</option>
-                        <option value="faizal">Faizal</option>
-                    </select>
-                    {errors.assignee && <p style={{color: 'red'}}>{errors.assignee}</p>}
-                </div>
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="optionA">Option A</MenuItem>
+                        <MenuItem value="optionB">Option B</MenuItem>
+                    </Select>
+                    {errors.assignee && <FormHelperText>Assignee is required</FormHelperText>}
+                </FormControl>
 
-                <div>
-                    <label htmlFor="status">Status:</label>
-                    <select
+
+                <FormControl fullWidth margin="normal" error={errors.priority}>
+                    <InputLabel id="select-label-priority">Priority</InputLabel>
+                    <Select
+                        labelId="select-label-priority"
+                        name="priority"
+                        value={formData.priority}
+                        onChange={handleChange}
+                    >
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="optionA">Option A</MenuItem>
+                    </Select>
+                    {errors.priority && <FormHelperText>Priority is required</FormHelperText>}
+                </FormControl>
+
+                <FormControl fullWidth margin="normal" error={errors.status}>
+                    <InputLabel id="select-label-status">Status</InputLabel>
+                    <Select
+                        labelId="select-label-status"
                         name="status"
-                        id="status"
+                        value={formData.status}
                         onChange={handleChange}
+                        error={errors.status}
                     >
-                        <option value=""></option>
-                        <option value="To Do">To Do</option>
-                        <option value="In Progress">In Progress</option>
-                        <option value="Done">Done</option>
-                    </select>
-                    {errors.status && <p style={{color: 'red'}}>{errors.status}</p>}
-                </div>
+                        <MenuItem value=""><em>None</em></MenuItem>
+                        <MenuItem value="optionA">Option A</MenuItem>
+                    </Select>
+                    {errors.assignee && <FormHelperText>Sttaus is required</FormHelperText>}
+                </FormControl>
 
-                <button type='submit'>Create</button>
-            </form>
-        </dialog>
-    </>;
-};
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleCloseDialog} color="primary">Cancel</Button>
+                <Button onClick={handleSubmit} color="primary">Submit</Button>
+            </DialogActions>
+        </Dialog>
+    );
+}

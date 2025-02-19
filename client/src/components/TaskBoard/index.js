@@ -38,11 +38,11 @@ export const TaskBoard = () => {
               style={{height: "100%", display: 'flex'}}>
             {
                 statuses.map((status) => (
-                    <Grid item spacing={20} my={4} xs={12} sm={6} md={4} onDragOver={handleDragOver}
+                    <Grid key={status} item my={4} xs={12} sm={6} md={4} onDragOver={handleDragOver}
                           onDrop={() => handleDrop(status)} elevation={3}
                           sx={{display: 'flex', alignItems: 'start', justifyContent: 'center'}}>
 
-                        <Paper key={status}
+                        <Paper
                                elevation={24}
                                sx={{
                                    p: 2,

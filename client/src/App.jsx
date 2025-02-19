@@ -1,6 +1,4 @@
 import React from "react";
-import './styles.scss'
-import './index.scss';
 import {Header} from "./components/Header";
 import {TaskBoard} from "./components/TaskBoard";
 import {TasksProvider} from "./state/TasksProvider";
@@ -32,11 +30,9 @@ const App = () => {
     const getClassName = (status) => {
         switch (status) {
             case 'Server is Up':
-                return 'appStatus'
-            case 'Server is Down':
-                return 'appStatusDown'
-            case 'Server is Unreachable':
-                return 'appStatusDown'
+                return 'secondary'
+            default:
+                return 'error'
         }
     }
 
@@ -44,7 +40,10 @@ const App = () => {
         <div className="appInfoContainer">
             <Typography variant="h3">Task Dashboard</Typography>
 
-            <p className={getClassName(serverStatus)}>{serverStatus}</p>
+            <Typography
+                variant="body2" color={getClassName(serverStatus)}> {serverStatus}
+
+            </Typography>
         </div>
 
         <TasksProvider>
