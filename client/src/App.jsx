@@ -1,19 +1,17 @@
 import React from "react";
-
-
 import './styles.scss'
 import './index.scss';
 import {Header} from "./components/Header";
-import { TaskBoard } from "./components/TaskBoard";
+import {TaskBoard} from "./components/TaskBoard";
 import {TasksProvider} from "./state/TasksProvider";
-import {SummaryWidget} from "./components/SummaryWidget";
+import {Typography, Box} from "@mui/material";
 
 import {useState, useEffect} from "react";
 
 const App = () => {
-    const [ serverStatus, setServerStatus ] = useState(null);
+    const [serverStatus, setServerStatus] = useState(null);
 
-    useEffect( () => {
+    useEffect(() => {
         const callHealthCheckApi = async () => {
             try {
                 const response = await fetch('http://localhost:5000/api/health/check')
@@ -43,17 +41,21 @@ const App = () => {
     }
 
     return <>
-        <div className="appInfoContainer"><h1 className="appName">Task Dashboard</h1><p className={getClassName(serverStatus)}>{serverStatus}</p></div>
+        <div className="appInfoContainer">
+            <Typography variant="h3">Task Dashboard</Typography>
+
+            <p className={getClassName(serverStatus)}>{serverStatus}</p>
+        </div>
+
         <TasksProvider>
-            <div className="dashboard">
+            <Box>
                 <Header/>
                 <div className="content">
-                <SummaryWidget/>
                     <main className="main">
                         <TaskBoard/>
                     </main>
                 </div>
-            </div>
+            </Box>
         </TasksProvider>
     </>
 }

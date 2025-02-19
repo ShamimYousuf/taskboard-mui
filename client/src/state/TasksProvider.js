@@ -6,8 +6,8 @@ export const TasksProvider = ( {children }) => {
 
   const taskList = [
     {
-      '_id': 'TASK-1',
-      'title': 'Fish coconut curry',
+      'taskID': 'TASK-1',
+      'summary': 'Fish coconut curry',
       'epic': 'Curries',
       'priority': 1,
       'assignee': 'Shamim',
@@ -16,7 +16,7 @@ export const TasksProvider = ( {children }) => {
 
     {
       'taskID': 'TASK-2',
-      'title': 'Panneer mutter masala',
+      'summary': 'Panneer mutter masala',
       'epic': 'Curries',
       'priority': 2,
       'assignee': 'Ashok',
@@ -25,7 +25,7 @@ export const TasksProvider = ( {children }) => {
 
     {
       'taskID': 'TASK-3',
-      'title': 'Living room decoration',
+      'summary': 'Living room decoration',
       'epic': 'Painting',
       'priority': 4,
       'assignee': 'Faizal',
@@ -34,7 +34,7 @@ export const TasksProvider = ( {children }) => {
 
     {
       'taskID': 'TASK-4',
-      'title': 'Kitchen Roof',
+      'summary': 'Kitchen Roof',
       'epic': 'Painting',
       'priority': 3,
       'assignee': 'Chetna',
@@ -43,7 +43,7 @@ export const TasksProvider = ( {children }) => {
 
     {
       'taskID': 'TASK-5',
-      'title': 'Outer wall',
+      'summary': 'Outer wall',
       'epic': 'Painting',
       'priority': 4,
       'assignee': 'Saji',
@@ -52,7 +52,7 @@ export const TasksProvider = ( {children }) => {
 
     {
       'taskID': 'TASK-6',
-      'title': 'Roses at the back garden',
+      'summary': 'Roses at the back garden',
       'epic': 'Gardening',
       'priority': 4,
       'assignee': 'Sahu',
